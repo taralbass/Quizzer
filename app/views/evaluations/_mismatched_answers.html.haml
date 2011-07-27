@@ -10,8 +10,8 @@
 
 .result_actions{:'data-action' => evaluation_path(@evaluation), :style => 'display: none'}
   .incorrect
-    = submit_tag "Got It, Next Question!", 'data-result' => 'incorrect'
+    = submit_tag "OK, Next Question!", 'data-result' => 'incorrect'
   .correct
     = submit_tag "Actually, I Was Right!", 'data-result' => 'correct'
   .ignore
-    = submit_tag "I Don't Like This Question, Ignore It!", 'data-result' => 'ignored'
+    = submit_tag "Ignore This Question!", 'data-result' => 'ignored'

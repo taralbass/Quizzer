@@ -37,7 +37,7 @@
     padding: 18px 12px;
     margin-top: 15px;
     border: 2px solid #cd5c5c;
-    max-width: 410px; }
+    max-width: 510px; }
   #evaluation_in_progress .answer {
     font-style: normal;
     font-family: courier, "courier new", monospace;
@@ -70,7 +70,7 @@
     margin-right: 10px;
     clear: both; }
   #evaluation_in_progress .final_answers {
-    min-width: 200px; }
+    min-width: 250px; }
   #evaluation_in_progress .correct_answers {
     margin-top: 10px;
     /* safari */
@@ -87,7 +87,7 @@
     border-top-left-radius: 6px;
     padding: 10px 12px;
     border: 2px solid #007643;
-    min-width: 200px; }
+    min-width: 250px; }
   #evaluation_in_progress .correct_result {
     margin-top: 40px;
     font-weight: bold;

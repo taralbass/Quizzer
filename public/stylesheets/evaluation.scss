@@ -27,7 +27,7 @@
     padding: 18px 12px;
     margin-top: 15px;
     border: 2px solid $red;
-    max-width: 410px;
+    max-width: 510px;
   }
 
   .answer {
@@ -82,7 +82,7 @@
   }
 
   .final_answers {
-    min-width: 200px;
+    min-width: 250px;
   }
 
   .correct_answers {
@@ -90,7 +90,7 @@
     @include rounded-corners(6px);
     padding: 10px 12px;
     border: 2px solid $green;
-    min-width: 200px;
+    min-width: 250px;
   }
 
   .correct_result {

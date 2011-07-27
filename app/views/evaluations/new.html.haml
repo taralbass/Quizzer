@@ -4,13 +4,15 @@
       All quizzes are intended as learning aids only.
     
     %p
-      After answering a question, your answer will be marked as correct if it is an
-      exact match. However, if it is not an exact match but you feel your answer was
-      correct, you can override the system and marking your answer as correct...
-      after all, the quiz is intended to facilitate the learning process, not 
-      quibble over typos or alternate answers.  Marking your answer as correct will
-      prevent the question from being posed again if you retake the quiz. Similarly,
-      you can prevent the question from being posed again by selecting to ignore it.
+      If your answer to a quiz question is not an exact match, you will be shown
+      the accepted answer to the question. If you feel your answer was correct,
+      you have the option of indicating such. The quiz is for your benefit, so
+      you are ultimate judge. You can also choose to ignore the question. Correctly
+      answered and ignored questions will not be represented if you retake the quiz.
+
+    %p
+      Many questions are code snippets, in which case the answer is the value
+      returned by the presented code.
 
     %p
       Throughout the quiz, the following notation will be used:
@@ -18,15 +20,15 @@
     %p
       %span.code<
         ModuleName#method_name
-      &mdash; instance method called method_name of module ModuleName
+      &mdash; instance method
 
     %p
       %span.code<
         ModuleName.method_name
-      &mdash; class method called method_name of module ModuleName
+      &mdash; class method
 
   = form_for @evaluation do |f|
     = f.hidden_field :quiz_id, :value => @evaluation.quiz_id
     = f.hidden_field :parent_id, :value => @evaluation.parent_id
-    = f.submit "Start the quiz now!"
+    = f.submit "Start the Quiz Now!"
 
