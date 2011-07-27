@@ -1,28 +1,17 @@
-# SQLite version 3.x
-#   gem install mysql
 development:
-  adapter: mysql
+  adapter: postgresql
   database: quizzer_dev
   username: quizzer_dev
   password: quizzer_dev
-  pool: 5
-  timeout: 5000
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
-  adapter: mysql
+  adapter: postgresql
   database: quizzer_test
   username: quizzer_test
   password: quizzer_test
-  pool: 5
-  timeout: 5000
 
 production:
-  adapter: mysql
+  adapter: postgresql
   database: quizzer_production
   username: quizzer_prod
   password: quizzer_prod
-  pool: 5
-  timeout: 5000

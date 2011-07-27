@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.9'
 
-gem 'mysql'
+gem 'pg'
 gem 'andand'
 gem 'haml'
 gem 'sass'

@@ -65,7 +65,7 @@ class EvaluationTest < ActiveSupport::TestCase
           incorrect_results = 3.times.collect { Factory :incorrect_result, :evaluation => evaluation.parent }
           Factory :ignored_result, :evaluation => evaluation.parent
           Factory :correct_result, :evaluation => evaluation.parent
-          assert_equal incorrect_results.collect(&:question_id), evaluation.reload.question_ids
+          assert_equal incorrect_results.collect(&:question_id).sort, evaluation.reload.question_ids.sort
         end
       end
 

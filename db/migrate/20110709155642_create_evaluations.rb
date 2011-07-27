@@ -3,7 +3,7 @@ class CreateEvaluations < ActiveRecord::Migration
     create_table :evaluations do |t|
       t.integer :quiz_id
       t.integer :parent_id
-      t.boolean :completed, :default => 0
+      t.boolean :completed, :default => false
 
       t.timestamps
     end
