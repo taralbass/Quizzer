@@ -29,8 +29,8 @@ a.trailing_link {
   float: left; }
 #new_quiz .header, #quiz .header {
   clear: both;
-  padding: 4px 5px 4px 0;
-  width: 6em;
+  padding: 5px 5px 5px 0;
+  width: 7em;
   font-weight: bold;
   text-align: right; }
 #new_quiz .error, #quiz .error {
@@ -48,12 +48,12 @@ a.trailing_link {
   margin: -4px 0 5px 0; }
 
 #quiz .value {
-  padding: 4px 6px;
+  padding: 5px 6px;
   max-width: 37.5em; }
   #quiz .value:hover {
     cursor: pointer; }
 #quiz .success {
-  padding: 4px 0;
+  padding: 5px 0;
   color: #2e8b57; }
 #quiz input[type=submit] {
   margin-left: 8px; }
@@ -69,11 +69,11 @@ a.trailing_link {
 #quiz .answer {
   clear: both; }
   #quiz .answer .delimiter {
-    padding: 3px 0;
+    padding: 4px 0;
     margin: 0 1px 0 6px; }
 #quiz a.delete_link {
   margin-left: -4px;
-  padding-top: 8px;
+  padding-top: 9px;
   font-size: 0.8em; }
 #quiz .inline_new a.delete_link {
   margin-left: 2px; }

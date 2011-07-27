@@ -42,11 +42,11 @@
     font-style: normal;
     font-family: courier, "courier new", monospace;
     white-space: pre-wrap;
-    padding: 4px 0 4px 6px; }
+    padding: 5px 0 5px 6px; }
   #evaluation_in_progress .header, #evaluation_in_progress .delimiter {
     clear: both;
     font-weight: bold;
-    padding: 4px 4px 4px 0; }
+    padding: 5px 4px 5px 0; }
   #evaluation_in_progress .delimiter {
     margin-right: 2px;
     margin-top: -1px; }
