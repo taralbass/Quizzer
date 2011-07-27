@@ -22,5 +22,7 @@ test:
 production:
   adapter: mysql
   database: quizzer_production
+  username: quizzer_prod
+  password: quizzer_prod
   pool: 5
   timeout: 5000
