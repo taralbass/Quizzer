@@ -1,0 +1,143 @@
+/* quiz.scss */
+
+@import "imports";
+
+a.trailing_link {
+  margin-left: 5px;
+  font-size: $minimized-font-size;
+}
+
+#quiz_index, #new_quiz, #quiz {
+  margin: 30px 0;
+}
+
+#quiz_index {
+  .quiz {
+    margin-top: 10px;
+  }
+
+  .name {
+    font-weight: bold;
+
+    a {
+      color: $green;
+
+      &:visited {
+        color: $light-green;
+      }
+      &:hover {
+        color: $dark-green;
+      }
+    }
+  }
+}
+
+#new_quiz, #quiz {
+  a {
+    display: block;
+  }
+
+  .inline_managed, .mirror_inline_managed {
+    div, form, input, textarea, a {
+      float: left;
+    }
+  }
+
+  .header {
+    clear: both;
+    padding: $display-vertical-padding 5px $display-vertical-padding 0;
+    width: 6em;
+    font-weight: bold;
+    text-align: right;
+  }
+
+  .error {
+    clear: both;
+    font-size: $minimized-font-size;
+    color: red;
+  }
+}
+
+#new_quiz {
+  input[type=text] {
+    margin-bottom: 5px;
+  }
+
+  input[type=submit] {
+    clear: both;
+    float: right;
+    margin-top: 10px;
+  }
+
+  .error {
+    margin: -4px 0 5px 0;
+  }
+}
+
+#quiz {
+  .value {
+    padding: $display-vertical-padding $display-horizontal-padding;
+    max-width: 37.5em;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .success {
+    padding: $display-vertical-padding 0;
+    color: $light-green;
+  }
+
+  input[type=submit] {
+    margin-left: 8px;
+  }
+
+  .quiz .description {
+    min-height: 3.5em;
+  }
+
+  .question {
+    clear: both;
+    padding-top: 20px;
+
+    .value, input[type=text], textarea {
+      @include code;
+    }
+  }
+
+  .answer {
+    clear: both;
+
+   .delimiter {
+      padding: ($display-vertical-padding - 1) 0;
+      margin: 0 1px 0 $display-horizontal-padding;
+    }
+  }
+
+  a.delete_link {
+    margin-left: -4px;
+    padding-top: $display-vertical-padding + 4;
+    font-size: $minimized-font-size;
+  }
+
+  .inline_new a.delete_link {
+    margin-left: 2px;
+  }
+
+  a.add_answer_link {
+    clear: both;
+    font-size: $minimized-font-size;
+    margin-left: $display-horizontal-padding;
+  }
+
+  .inline_new .submit_buttons {
+    clear: both;
+    float: right;
+    margin-top: -8px;
+  }
+
+  .standard_linkset {
+    margin-top: 30px;
+  }
+}

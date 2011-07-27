@@ -1,0 +1,17 @@
+- answer_count = question.answers.count
+
+.correct_answers{:style => 'display: none'}
+  .header
+    Correct #{pluralize_based_on_count "Answer", answer_count}:
+  - question.answers.each_with_index do |answer, i|
+    = evaluation_answer_delimiter(answer_count, i+1)
+    .answer<
+      = answer.text
+
+.result_actions{:'data-action' => evaluation_path(@evaluation), :style => 'display: none'}
+  .incorrect
+    = submit_tag "Got It, Next Question!", 'data-result' => 'incorrect'
+  .correct
+    = submit_tag "Actually, I Was Right!", 'data-result' => 'correct'
+  .ignore
+    = submit_tag "I Don't Like This Question, Ignore It!", 'data-result' => 'ignored'

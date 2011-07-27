@@ -1,0 +1,150 @@
+/* body.scss */
+
+@import "reset";
+@import "imports";
+
+/* additional resets */
+input[type=text], textarea {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+input, textarea {
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* general look and feel */
+
+body {
+  font-family: $default_font_family;
+  font-size: $standard-font-size;
+  line-height: $line-height;
+  color: $black;
+  margin: 40px 80px;
+}
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+  color: $red;
+
+  &:hover {
+    cursor: pointer;
+    color: $dark-red;
+  }
+}
+
+#nav_links, .standard_linkset {
+  a {
+    display: block;
+  }
+
+  div, a {
+    float: left;
+  }
+
+  .delimiter {
+    padding: 0 10px;
+    color: $red;
+  }
+}
+
+#nav_links {
+  float: right;
+  margin-top: -2em;
+}
+
+.standard_linkset {
+  clear: both;
+  float: left;
+  padding: 20px 0;
+}
+
+input[type=text], textarea {
+  border: 2px solid $light-gray;
+  margin: 1px 0;
+
+  &:hover {
+    border: 2px solid $gray;
+  }
+  &:focus {
+    border: 2px solid $green;
+    outline: none;
+  }
+}
+
+input[type=text] {
+  padding: $input-vertical-padding $input-horizontal-padding;
+}
+
+textarea {
+  padding: $input-vertical-padding $input-horizontal-padding+1;
+}
+
+#header h1 {
+  font-size: $giant-font-size;
+  font-weight: bold;
+
+  .main {
+    margin-right: 10px;
+    float: left;
+    color: $gray;
+  }
+
+  .ruby {
+    float: left;
+    color: $red;
+  }
+}
+
+#flash {
+  clear: both;
+  margin: 20px 0;
+  font-size: $enlarged-font-size;
+
+  .error {
+    color: $red;
+  }
+  .notice {
+    color: $green;
+  }
+}
+
+#instructions, #about {
+  clear: both;
+  margin: 20px 0;
+
+  p {
+    margin-bottom: 15px;
+  }
+
+  .highlight {
+    font-weight: bold;
+  }
+}
+
+#instructions {
+  font-style: italic;
+}
+
+#footer {
+  clear: both;
+  margin: 50px 0 15px 0;
+  font-size: $minimized-font-size;
+  text-align: center;
+  span {
+    padding: 0 3px;
+  }
+}
+
+
+/* helpers */
+
+.clear {
+  clear: both;
+  height: 1px;
+  width: 1px;
+}

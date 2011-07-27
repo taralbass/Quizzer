@@ -1,0 +1,157 @@
+/* body.scss */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* _imports.scss */
+/* _constants.scss */
+/* IndianRed */
+/* SeaGreen */
+/* to allow text within input to be in identical position as normal display */
+/* _mixins.scss */
+/* additional resets */
+input[type=text], textarea {
+  margin: 0;
+  padding: 0;
+  border: 0; }
+
+input, textarea {
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* general look and feel */
+body {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 1em;
+  line-height: 1.4;
+  color: #222222;
+  margin: 40px 80px; }
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #cd5c5c; }
+  a:hover {
+    cursor: pointer;
+    color: #aa2e2d; }
+
+#nav_links a, .standard_linkset a {
+  display: block; }
+#nav_links div, #nav_links a, .standard_linkset div, .standard_linkset a {
+  float: left; }
+#nav_links .delimiter, .standard_linkset .delimiter {
+  padding: 0 10px;
+  color: #cd5c5c; }
+
+#nav_links {
+  float: right;
+  margin-top: -2em; }
+
+.standard_linkset {
+  clear: both;
+  float: left;
+  padding: 20px 0; }
+
+input[type=text], textarea {
+  border: 2px solid #eeeeee;
+  margin: 1px 0; }
+  input[type=text]:hover, textarea:hover {
+    border: 2px solid #707070; }
+  input[type=text]:focus, textarea:focus {
+    border: 2px solid #007643;
+    outline: none; }
+
+input[type=text] {
+  padding: 1px 3px; }
+
+textarea {
+  padding: 1px 4px; }
+
+#header h1 {
+  font-size: 2.5em;
+  font-weight: bold; }
+  #header h1 .main {
+    margin-right: 10px;
+    float: left;
+    color: #707070; }
+  #header h1 .ruby {
+    float: left;
+    color: #cd5c5c; }
+
+#flash {
+  clear: both;
+  margin: 20px 0;
+  font-size: 1.25em; }
+  #flash .error {
+    color: #cd5c5c; }
+  #flash .notice {
+    color: #007643; }
+
+#instructions, #about {
+  clear: both;
+  margin: 20px 0; }
+  #instructions p, #about p {
+    margin-bottom: 15px; }
+  #instructions .highlight, #about .highlight {
+    font-weight: bold; }
+
+#instructions {
+  font-style: italic; }
+
+#footer {
+  clear: both;
+  margin: 50px 0 15px 0;
+  font-size: 0.8em;
+  text-align: center; }
+  #footer span {
+    padding: 0 3px; }
+
+/* helpers */
+.clear {
+  clear: both;
+  height: 1px;
+  width: 1px; }

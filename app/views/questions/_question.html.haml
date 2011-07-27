@@ -1,0 +1,14 @@
+.inline_managed.question[question]
+  .header
+    Question:
+  .inline_managed_attribute.question_text
+    = render 'shared/inline_displayed', :target => question, :attr => :text
+    .restore
+      = link_to 'x', question, :confirm => 'Delete?', :method => :delete, :remote => true, :class => :delete_link
+  .header
+    &nbsp;
+
+  .answers
+    = render question.answers
+    %a.add_answer_link.inline_insert_new{:action => new_answer_path({ :answer => { :question_id => question.id } }) }
+      Add Answer

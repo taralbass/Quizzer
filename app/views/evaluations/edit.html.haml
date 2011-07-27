@@ -1,0 +1,20 @@
+- content_for :javascript do
+  = javascript_include_tag 'evaluate'
+
+#evaluation_in_progress{:'data-question-ids' => @question_ids.to_json, :'data-action' => evaluation_path(@evaluation)}
+  .quiz_name
+    = @evaluation.quiz.name
+
+  .question_indicator
+    Question
+    %span.question_index
+      1
+    out of
+    = @question_ids.size
+
+  .posed_question{:'data-action' => pose_question_for_evaluation_path(@evaluation)}
+
+  -# form is hidden from user and submitted by evaluate.js when no more questions are left
+  .evaluation_complete
+    = form_for @evaluation do |f|
+      = f.hidden_field :completed, :value => true

@@ -1,0 +1,25 @@
+.inline_managed.question
+  .inline_managed_object
+    .header
+      Question:
+    .inline_new
+      = form_for question, :remote => true do |f|
+        = f.hidden_field :quiz_id, :value => question.quiz_id
+        = hidden_field_tag :new_form_id, ""
+        .question_text
+          = render :partial => 'questions/text_input', :locals => { :form => f }
+        .error
+        .answer.inline_retractable
+          .delimiter
+            = answer_delimiter
+          .answer_text
+            = f.fields_for :answers do |af|
+              = render :partial => 'answers/text_input', :locals => { :form => af }
+          %a.inline_retract.delete_link.extended_only{:style => "display: none"}
+            x
+        %a.add_answer_link.inline_extend
+          Add Answer
+        .submit_buttons
+          = f.submit "Save Question"
+          .remove
+            = submit_tag "Remove", :name => 'remove'

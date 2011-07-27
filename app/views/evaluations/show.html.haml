@@ -1,0 +1,26 @@
+- correct_count = @evaluation.results.correct.count
+- incorrect_count = @evaluation.results.incorrect.count
+- total_count = correct_count + incorrect_count
+- ignored_count = @evaluation.results.ignored.count
+
+#evaluation_results
+  .quiz_name
+    = @evaluation.quiz.name
+
+  .header
+    Your Results:
+
+  .results
+    %p
+      You got #{correct_count} out of #{total_count} #{pluralize_based_on_count "question", total_count} right!
+    %p
+      You ignored #{ignored_count} #{pluralize_based_on_count "question", ignored_count}.
+
+  .standard_linkset
+    - if incorrect_count > 0
+      = link_to "Retake the questions you missed!", new_evaluation_path(:evaluation => { :parent_id => @evaluation.id, :quiz_id => @evaluation.quiz.id })
+      = link_delimiter
+    = link_to "Retake all the questions!", new_evaluation_path(:evaluation => { :quiz_id => @evaluation.quiz.id })
+    = link_delimiter
+    = link_to "Take a different quiz!", quizzes_path
+

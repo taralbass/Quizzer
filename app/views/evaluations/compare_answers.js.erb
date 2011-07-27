@@ -1,0 +1,15 @@
+$eval = $('#evaluation_in_progress');
+var answersCount = $eval.find('.answers_form').attr('answer_count');
+
+/* transfer answers to final_answers div */
+for(var i=0; i<answersCount; i++) {
+  var value = $eval.find('.posed_question #answers_' + i).attr('value');
+  if (typeof value === 'undefined' || value === false || value === "") {
+    value = "&lt;none&gt;";
+  }
+  $eval.find('.final_answers .answer_' + i).html(value);
+}
+
+$eval.find('.posed_question .answers_form').remove();
+$eval.find('.final_answers').show().end().find('.posed_question .result').replaceWith('<%= escape_javascript render(:partial => @partial, :locals => { :evaluation => @evaluation, :question => @question }) %>');
+$eval.find('.correct_answers,.result_actions').fadeIn(300);

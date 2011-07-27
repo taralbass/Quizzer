@@ -1,0 +1,10 @@
+$marker = $('[starting_new_form_id="<%= starting_new_form_id %>"]');
+while ( $marker.parent().hasClass('bypass_on_insert') ) {
+  $marker = $marker.parent();
+}
+for (var i = <%= starting_new_form_id -%>; i < <%= starting_new_form_id + count -%>; i++)
+{
+  $data = $('<div>' + '<%= escape_javascript render(:partial => partial, :locals => local_assigns.reject{|k,v|[:partial,:starting_new_form_id,:count].include? k}) %>' + '</div>');
+  $data.find('.inline_new').attr('id', 'new_form_' + i).find('#new_form_id').attr('value', i);
+  $marker.before($data.html());
+}

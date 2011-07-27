@@ -1,0 +1,23 @@
+- answer_count = question.answers.count
+
+.question<
+  = question.text
+
+.answers_form{:answer_count => question.answers.count}
+  = form_tag compare_answers_for_evaluation_path(@evaluation), :method => :post, :remote => true do
+    .header
+      Your #{pluralize_based_on_count "Answer", answer_count}:
+    - answer_count.times do |i|
+      = evaluation_answer_delimiter(answer_count, i+1)
+      = text_field_tag "answers[#{i}]", nil, :size => 50, :maxlength => 50
+      = hidden_field_tag "question_id", question.id
+    = submit_tag "Submit"
+
+.final_answers{:style => 'display: none'}
+  .header
+    Your #{pluralize_based_on_count "Answer", answer_count}:
+  - answer_count.times do |i|
+    = evaluation_answer_delimiter(answer_count, i+1)
+    .answer{:class => "answer_#{i}"}
+      
+.result{:style => 'display: none' }

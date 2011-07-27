@@ -1,0 +1,89 @@
+/* quiz.scss */
+/* _imports.scss */
+/* _constants.scss */
+/* IndianRed */
+/* SeaGreen */
+/* to allow text within input to be in identical position as normal display */
+/* _mixins.scss */
+a.trailing_link {
+  margin-left: 5px;
+  font-size: 0.8em; }
+
+#quiz_index, #new_quiz, #quiz {
+  margin: 30px 0; }
+
+#quiz_index .quiz {
+  margin-top: 10px; }
+#quiz_index .name {
+  font-weight: bold; }
+  #quiz_index .name a {
+    color: #007643; }
+    #quiz_index .name a:visited {
+      color: #2e8b57; }
+    #quiz_index .name a:hover {
+      color: #005533; }
+
+#new_quiz a, #quiz a {
+  display: block; }
+#new_quiz .inline_managed div, #new_quiz .inline_managed form, #new_quiz .inline_managed input, #new_quiz .inline_managed textarea, #new_quiz .inline_managed a, #new_quiz .mirror_inline_managed div, #new_quiz .mirror_inline_managed form, #new_quiz .mirror_inline_managed input, #new_quiz .mirror_inline_managed textarea, #new_quiz .mirror_inline_managed a, #quiz .inline_managed div, #quiz .inline_managed form, #quiz .inline_managed input, #quiz .inline_managed textarea, #quiz .inline_managed a, #quiz .mirror_inline_managed div, #quiz .mirror_inline_managed form, #quiz .mirror_inline_managed input, #quiz .mirror_inline_managed textarea, #quiz .mirror_inline_managed a {
+  float: left; }
+#new_quiz .header, #quiz .header {
+  clear: both;
+  padding: 4px 5px 4px 0;
+  width: 6em;
+  font-weight: bold;
+  text-align: right; }
+#new_quiz .error, #quiz .error {
+  clear: both;
+  font-size: 0.8em;
+  color: red; }
+
+#new_quiz input[type=text] {
+  margin-bottom: 5px; }
+#new_quiz input[type=submit] {
+  clear: both;
+  float: right;
+  margin-top: 10px; }
+#new_quiz .error {
+  margin: -4px 0 5px 0; }
+
+#quiz .value {
+  padding: 4px 6px;
+  max-width: 37.5em; }
+  #quiz .value:hover {
+    cursor: pointer; }
+#quiz .success {
+  padding: 4px 0;
+  color: #2e8b57; }
+#quiz input[type=submit] {
+  margin-left: 8px; }
+#quiz .quiz .description {
+  min-height: 3.5em; }
+#quiz .question {
+  clear: both;
+  padding-top: 20px; }
+  #quiz .question .value, #quiz .question input[type=text], #quiz .question textarea {
+    font-style: normal;
+    font-family: courier, "courier new", monospace;
+    white-space: pre-wrap; }
+#quiz .answer {
+  clear: both; }
+  #quiz .answer .delimiter {
+    padding: 3px 0;
+    margin: 0 1px 0 6px; }
+#quiz a.delete_link {
+  margin-left: -4px;
+  padding-top: 8px;
+  font-size: 0.8em; }
+#quiz .inline_new a.delete_link {
+  margin-left: 2px; }
+#quiz a.add_answer_link {
+  clear: both;
+  font-size: 0.8em;
+  margin-left: 6px; }
+#quiz .inline_new .submit_buttons {
+  clear: both;
+  float: right;
+  margin-top: -8px; }
+#quiz .standard_linkset {
+  margin-top: 30px; }

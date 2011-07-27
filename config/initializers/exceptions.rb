@@ -1,0 +1,1 @@
+class MethodIncorrectlyUsedError < StandardError; end

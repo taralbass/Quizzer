@@ -1,0 +1,29 @@
+/* _constants.scss */
+
+$default_font_family: verdana, arial, helvetica, sans-serif;
+$fixed_width_font_family: courier, "courier new", monospace;
+
+$giant-font-size: 2.5em;
+$enlarged-font-size: 1.25em;
+$standard-font-size: 1em;
+$minimized-font-size: 0.8em;
+
+$line-height: 1.4;
+
+$red: #cd5c5c;  /* IndianRed */
+$dark-red: #aa2e2d;
+$light-green: #2e8b57;  /* SeaGreen */
+$green: #007643;
+$dark-green: #005533;
+$blue: cornflowerBlue;
+$purple: #9370D8;
+
+$light-gray: #eee;
+$gray: #707070;
+$black: #222;
+
+$input-vertical-padding: 1px;
+$input-horizontal-padding: 3px;
+/* to allow text within input to be in identical position as normal display */
+$display-vertical-padding: 4px;
+$display-horizontal-padding: 6px;

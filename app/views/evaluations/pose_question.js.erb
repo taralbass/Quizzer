@@ -1,0 +1,2 @@
+$('#evaluation_in_progress').find('.posed_question').hide().html('<%= escape_javascript render(:partial => 'posed_question', :locals => { :question => @question }) %>').fadeIn(300).end().find('.question_index').html(questionIndex.toString());
+questionIndex += 1;

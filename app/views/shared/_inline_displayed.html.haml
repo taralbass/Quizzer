@@ -1,0 +1,6 @@
+.inline_displayed{:action => send(edit_path_helper(target), target), :attr => attr}
+  %div[target, attr]
+    .value<
+      = target.send(attr).blank? ? '&lt;none&gt;'.html_safe : substitute_html_breaks(target.send(attr))
+    .success{ :style => "display: none" }
+      updated!

@@ -1,0 +1,119 @@
+/* evaluation.scss */
+
+@import "imports";
+
+#new_evaluation {
+  p {
+    margin-top: 20px;
+  }
+
+  span.code {
+    @include code;
+  }
+}
+
+#evaluation_in_progress {
+  margin-top: 30px;
+
+  .quiz_name {
+    margin-top: 20px;
+    font-weight: bold;
+    color: $green;
+  }
+
+  .question {
+    @include rounded-corners(6px);
+    @include code;
+    padding: 18px 12px;
+    margin-top: 15px;
+    border: 2px solid $red;
+    max-width: 410px;
+  }
+
+  .answer {
+    @include code;
+    padding: $display-vertical-padding 0 $display-vertical-padding $display-horizontal-padding;
+  }
+
+  .header, .delimiter {
+    clear: both;
+    font-weight: bold;
+    padding: $display-vertical-padding 4px $display-vertical-padding 0;
+  }
+
+  .delimiter {
+    margin-right: 2px;
+    margin-top: -1px;
+  }
+
+  .non_numeric {
+    margin-top: -2px;
+  }
+
+  .answers_form {
+    input[type=text] {
+      @include code;
+    }
+
+    input[type=submit] {
+      clear: both;
+      margin-top: 15px;
+    }
+  }
+
+  .result_actions {
+    input[type=submit] {
+      margin-top: 6px;
+    }
+  }
+
+  .answers_form, .final_answers, .correct_answers {
+    float: left;
+
+    div, input {
+      float: left;
+    }
+  }
+
+  .answers_form, .final_answers {
+    margin-top: 22px;
+    margin-right: 10px;
+    clear: both;
+  }
+
+  .final_answers {
+    min-width: 200px;
+  }
+
+  .correct_answers {
+    margin-top: 10px;
+    @include rounded-corners(6px);
+    padding: 10px 12px;
+    border: 2px solid $green;
+    min-width: 200px;
+  }
+
+  .correct_result {
+    margin-top: 40px;
+    font-weight: bold;
+    font-size: $enlarged-font-size;
+  }
+
+  .result_actions { 
+    padding-top: 10px;
+    clear: both;
+  }
+}
+
+#evaluation_results {
+  margin-top: 20px;
+
+  .quiz_name {
+    font-weight: bold;
+    color: $green;
+  }
+
+  .header {
+    font-weight: bold;
+  }
+}

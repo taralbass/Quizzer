@@ -1,0 +1,32 @@
+#new_evaluation
+  #instructions
+    %p
+      All quizzes are intended as learning aids only.
+    
+    %p
+      After answering a question, your answer will be marked as correct if it is an
+      exact match. However, if it is not an exact match but you feel your answer was
+      correct, you can override the system and marking your answer as correct...
+      after all, the quiz is intended to facilitate the learning process, not 
+      quibble over typos or alternate answers.  Marking your answer as correct will
+      prevent the question from being posed again if you retake the quiz. Similarly,
+      you can prevent the question from being posed again by selecting to ignore it.
+
+    %p
+      Throughout the quiz, the following notation will be used:
+
+    %p
+      %span.code<
+        ModuleName#method_name
+      &mdash; instance method called method_name of module ModuleName
+
+    %p
+      %span.code<
+        ModuleName.method_name
+      &mdash; class method called method_name of module ModuleName
+
+  = form_for @evaluation do |f|
+    = f.hidden_field :quiz_id, :value => @evaluation.quiz_id
+    = f.hidden_field :parent_id, :value => @evaluation.parent_id
+    = f.submit "Start the quiz now!"
+

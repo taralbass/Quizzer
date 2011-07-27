@@ -1,0 +1,7 @@
+.inline_managed.answer[answer]
+  .delimiter
+    = answer_delimiter
+  .inline_managed_attribute
+    = render 'shared/inline_displayed', :target => answer, :attr => :text
+    .restore
+      = link_to 'x', answer, :confirm => 'Delete?', :method => :delete, :remote => true, :class => :delete_link

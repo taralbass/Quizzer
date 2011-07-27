@@ -1,0 +1,10 @@
+.inline_editable{:action => send(show_path_helper(target), target), :attr => attr}
+  %div[target, attr]
+    .edit_form
+      = form_for target, :remote => true do |f|
+        = hidden_field_tag :attr, attr
+        = render :partial => partial, :locals => { :form => f }
+        = f.submit "Done"
+      .cancel
+        = submit_tag "Cancel", :name => 'cancel'
+    .error

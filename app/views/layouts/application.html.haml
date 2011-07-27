@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %title Quizzer
+    = stylesheet_link_tag :all
+    = csrf_meta_tag
+  %body
+    = render :partial => 'shared/header'
+    = yield
+    = render :partial => 'shared/footer'
+    = javascript_include_tag 'jquery'
+    = javascript_include_tag 'jquery_ujs'
+    = yield :javascript

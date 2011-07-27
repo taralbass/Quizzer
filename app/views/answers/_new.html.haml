@@ -1,0 +1,13 @@
+.inline_managed.answer
+  .inline_managed_object
+    .delimiter
+      = answer_delimiter
+    .inline_new
+      = form_for answer, :remote => true do |f|
+        = f.hidden_field :question_id, :value => answer.question_id
+        = hidden_field_tag :new_form_id, ""
+        = render :partial => 'answers/text_input', :locals => { :form => f }
+        = f.submit "Save"
+      .remove
+        = submit_tag "Remove", :name => 'remove'
+      .error

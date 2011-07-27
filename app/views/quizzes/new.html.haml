@@ -1,0 +1,32 @@
+#nav_links
+  = link_to 'Quiz Management Demo', quizzes_path(:manage_quizzes => 1)
+  
+= render 'shared/flash', :flash => flash
+
+#instructions
+  %p
+    Create a new quiz below.
+
+- if @quiz.errors[:base].any?
+  #error_explanation
+    = @quiz.errors[:base].join(', ')
+
+#new_quiz
+  .mirror_inline_managed
+    = form_for(@quiz) do |f|
+      .header
+        %label{ :for => 'quiz_name' }
+          Name:
+      .attribute
+        = render :partial => 'quizzes/name_input', :locals => { :form => f }
+        .error
+          = @quiz.errors[:name].join(',')
+      .header
+        %label{ :for => 'quiz_description' }
+          Description:
+      .attribute
+        = render :partial => 'quizzes/description_input', :locals => { :form => f }
+        .error
+          = @quiz.errors[:description].join(', ')
+        = f.submit "Create Quiz and Start Adding Questions!"
+

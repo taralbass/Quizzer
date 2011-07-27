@@ -1,0 +1,39 @@
+- content_for :javascript do
+  = javascript_include_tag 'inline_management'
+
+#nav_links
+  = link_to 'New Quiz', new_quiz_path
+  = link_delimiter
+  = link_to 'Quiz Management Demo', quizzes_path(:manage_quizzes => 1)
+
+= render 'shared/flash', :flash => flash
+
+#instructions
+  %p
+    Click on any field to edit it in place. Add and remove questions and answers using the provided links.
+    This is a demo only.
+    %span.highlight
+      Changes you make are likely to be changed or deleted by others.
+
+#quiz
+  .inline_managed.quiz[@quiz]
+    .header
+      Quiz Name:
+    .inline_managed_attribute
+      = render 'shared/inline_displayed', :target => @quiz, :attr => :name
+      .restore
+        = link_to 'x', @quiz, :confirm => 'Delete quiz and all questions?', :method => :delete, :class => :delete_link
+    .header
+      Description:
+    .inline_managed_attribute.description
+      = render 'shared/inline_displayed', :target => @quiz, :attr => :description
+
+  = render @quiz.questions
+
+  .standard_linkset.bypass_on_insert
+    %a.inline_insert_new{:action => new_question_path({ :question => { :quiz_id => @quiz.id }}), :add_per_click => 5}
+      Add Questions
+    .delimiter
+      |
+    %a.inline_save_all
+      Save All in Page
