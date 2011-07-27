@@ -4,6 +4,6 @@
       = link_to quiz.name, new_evaluation_path(:evaluation => { :quiz_id => quiz.id })
     - if @manage
       %span
-        = link_to 'Details', quiz, :class => :trailing_link
+        = link_to 'Manage Quiz!', quiz, :class => :trailing_link
   .description
     = quiz.description
