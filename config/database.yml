@@ -9,6 +9,7 @@ test:
   database: quizzer_test
   username: quizzer_test
   password: quizzer_test
+  min_messages: WARNING
 
 production:
   adapter: postgresql
