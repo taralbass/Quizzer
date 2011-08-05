@@ -1,3 +1,3 @@
 $('#new_form_<%= new_form_id %>')
   .closest('.inline_managed')
-  .replaceWith('<%= escape_javascript render(:partial => partial, :locals => local_assigns.reject{|k,v|[:partial, :new_form_id].include? k}) %>');
+  .replaceWith('<%= escape_javascript render(partial, local_assigns.reject{|k,v|[:partial, :new_form_id].include? k}) %>');

@@ -2,7 +2,7 @@ $context = $('#<%= dom_id(target, attr) %>').closest('.inline_managed_attribute'
   
 $context
   .find('.inline_editable')
-  .replaceWith('<%= escape_javascript render(:partial => 'shared/inline_displayed', :locals => { :target => target, :attr => attr }) %>');
+  .replaceWith('<%= escape_javascript render('shared/inline_displayed', :target => target, :attr => attr) %>');
   
 if ($context.hasClass('updated')) {
   $context

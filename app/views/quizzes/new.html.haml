@@ -18,14 +18,14 @@
         %label{ :for => 'quiz_name' }
           Name:
       .attribute
-        = render :partial => 'quizzes/name_input', :locals => { :form => f }
+        = render 'quizzes/name_input', :form => f
         .error
           = @quiz.errors[:name].join(',')
       .header
         %label{ :for => 'quiz_description' }
           Description:
       .attribute
-        = render :partial => 'quizzes/description_input', :locals => { :form => f }
+        = render 'quizzes/description_input', :form => f
         .error
           = @quiz.errors[:description].join(', ')
         = f.submit "Create Quiz and Start Adding Questions!"

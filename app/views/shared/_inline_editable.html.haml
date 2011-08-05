@@ -3,7 +3,7 @@
     .edit_form
       = form_for target, :remote => true do |f|
         = hidden_field_tag :attr, attr
-        = render :partial => partial, :locals => { :form => f }
+        = render partial, :form => f
         = f.submit "Done"
       .cancel
         = submit_tag "Cancel", :name => 'cancel'

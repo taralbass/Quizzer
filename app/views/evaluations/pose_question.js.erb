@@ -1,7 +1,7 @@
 $('#evaluation_in_progress')
   .find('.posed_question')
     .hide()
-    .html('<%= escape_javascript render(:partial => 'posed_question', :locals => { :question => @question }) %>')
+    .html('<%= escape_javascript render('posed_question', :question => @question) %>')
     .fadeIn(300)
   .end()
   .find('.question_index')

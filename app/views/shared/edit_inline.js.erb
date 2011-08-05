@@ -4,4 +4,4 @@ $('#<%= dom_id(target, attr) %>')
     .hide()
   .end()
   .find('.inline_displayed')
-    .replaceWith('<%= escape_javascript render(:partial => 'shared/inline_editable', :locals => { :target => target, :attr => attr, :partial => partial }) %>');
+    .replaceWith('<%= escape_javascript render('shared/inline_editable', :target => target, :attr => attr, :partial => partial) %>');

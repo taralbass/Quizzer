@@ -6,7 +6,7 @@
       = form_for answer, :remote => true do |f|
         = f.hidden_field :question_id, :value => answer.question_id
         = hidden_field_tag :new_form_id, ""
-        = render :partial => 'answers/text_input', :locals => { :form => f }
+        = render 'answers/text_input',:form => f
         = f.submit "Save"
       .remove
         = submit_tag "Remove", :name => 'remove'

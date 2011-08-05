@@ -7,14 +7,14 @@
         = f.hidden_field :quiz_id, :value => question.quiz_id
         = hidden_field_tag :new_form_id, ""
         .question_text
-          = render :partial => 'questions/text_input', :locals => { :form => f }
+          = render 'questions/text_input', :form => f
         .error
         .answer.inline_retractable
           .delimiter
             = answer_delimiter
           .answer_text
             = f.fields_for :answers do |af|
-              = render :partial => 'answers/text_input', :locals => { :form => af }
+              = render 'answers/text_input', :form => af
           %a.inline_retract.delete_link.extended_only{:style => "display: none"}
             x
         %a.add_answer_link.inline_extend
