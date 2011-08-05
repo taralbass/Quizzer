@@ -83,8 +83,9 @@ class EvaluationTest < ActiveSupport::TestCase
     context "invoking randomized_question_ids" do
       should "return randomized array of question ids" do
         evaluation = Evaluation.new
-        evaluation.stubs(:question_ids).returns([1, 2, 3, 4])
-        evaluation.stubs(:rand).with().returns(4, 1, 3, 2) # [ a,b,c,d ] => [ b,d,c,a ]
+        results = [1, 2, 3, 4]
+        results.expects(:shuffle).returns([2, 4, 3, 1])
+        evaluation.stubs(:question_ids).returns(results)
         assert_equal [2, 4, 3, 1], evaluation.randomized_question_ids
       end
     end

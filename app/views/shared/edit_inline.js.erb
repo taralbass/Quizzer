@@ -1,1 +1,7 @@
-$('#<%= dom_id(target, attr) %>').closest('.inline_managed_attribute').find('.restore').hide().end().find('.inline_displayed').replaceWith('<%= escape_javascript render(:partial => 'shared/inline_editable', :locals => { :target => target, :attr => attr, :partial => partial }) %>');
+$('#<%= dom_id(target, attr) %>')
+  .closest('.inline_managed_attribute')
+  .find('.restore')
+    .hide()
+  .end()
+  .find('.inline_displayed')
+    .replaceWith('<%= escape_javascript render(:partial => 'shared/inline_editable', :locals => { :target => target, :attr => attr, :partial => partial }) %>');

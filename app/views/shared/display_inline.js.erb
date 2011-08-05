@@ -1,9 +1,17 @@
 $context = $('#<%= dom_id(target, attr) %>').closest('.inline_managed_attribute');
-$context.find('.inline_editable').replaceWith('<%= escape_javascript render(:partial => 'shared/inline_displayed', :locals => { :target => target, :attr => attr }) %>');
+  
+$context
+  .find('.inline_editable')
+  .replaceWith('<%= escape_javascript render(:partial => 'shared/inline_displayed', :locals => { :target => target, :attr => attr }) %>');
+  
 if ($context.hasClass('updated')) {
-  $context.removeClass('updated').find('.success').toggle().fadeOut(3000, function() {
-    $context.find('.restore').show();
-  });
+  $context
+    .removeClass('updated')
+    .find('.success')
+    .toggle()
+    .fadeOut(3000, function() {
+      $context.find('.restore').show();
+    });
 } else {
   $context.find('.restore').show();
 }

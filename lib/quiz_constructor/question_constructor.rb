@@ -2,7 +2,6 @@ module QuizConstructor
   class QuestionConstructor
     def initialize question
       @question = question
-      super
     end
 
     def with_answer answer

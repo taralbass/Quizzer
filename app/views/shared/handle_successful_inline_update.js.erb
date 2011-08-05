@@ -1,1 +1,5 @@
-$('#<%= dom_id(target, attr) %>').closest('.inline_managed_attribute').addClass('updated').find('.inline_editable').triggerInlineAttributeAction();
+$('#<%= dom_id(target, attr) %>')
+.closest('.inline_managed_attribute')
+  .addClass('updated')
+  .find('.inline_editable')
+  .triggerInlineAttributeAction();

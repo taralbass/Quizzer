@@ -1,1 +1,4 @@
-$('#new_form_<%= new_form_id %>').closest('.inline_new').find('.error').html("<%= target.errors.full_messages.join(', ') %>");
+$('#new_form_<%= new_form_id %>')
+  .closest('.inline_new')
+  .find('.error')
+  .html("<%= target.errors.full_messages.join(', ') %>");

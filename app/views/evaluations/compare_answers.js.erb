@@ -10,6 +10,17 @@ for(var i=0; i<answersCount; i++) {
   $eval.find('.final_answers .answer_' + i).html(value);
 }
 
-$eval.find('.posed_question .answers_form').remove();
-$eval.find('.final_answers').show().end().find('.posed_question .result').replaceWith('<%= escape_javascript render(:partial => @partial, :locals => { :evaluation => @evaluation, :question => @question }) %>');
-$eval.find('.correct_answers,.result_actions').fadeIn(300);
+$eval
+  .find('.posed_question .answers_form')
+  .remove();
+
+$eval
+  .find('.final_answers')
+    .show()
+  .end()
+  .find('.posed_question .result')
+    .replaceWith('<%= escape_javascript render(:partial => @partial, :locals => { :evaluation => @evaluation, :question => @question }) %>');
+    
+$eval
+  .find('.correct_answers,.result_actions')
+  .fadeIn(300);

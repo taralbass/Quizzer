@@ -43,7 +43,8 @@ class QuizConstructorTest < ActiveSupport::TestCase
   context "the description method" do
     should "set the description for @current_quiz" do
       quiz_constructor = Object.new.extend QuizConstructor
-      quiz_constructor.instance_variable_set('@current_quiz', quiz = Factory.build(:quiz))
+      quiz = Factory.build(:quiz)
+      quiz_constructor.instance_variable_set('@current_quiz', quiz)
       quiz.expects(:description=).with(:quiz_description)
       quiz_constructor.description(:quiz_description)
     end
@@ -52,7 +53,8 @@ class QuizConstructorTest < ActiveSupport::TestCase
   context "the asks method" do
     should "create a Question for current quiz with provided text" do
       quiz_constructor = Object.new.extend QuizConstructor
-      quiz_constructor.instance_variable_set('@current_quiz', quiz = Factory.build(:quiz))
+      quiz = Factory.build(:quiz)
+      quiz_constructor.instance_variable_set('@current_quiz', quiz)
       question = Factory.build(:question)
 
       Question.expects(:new).with(:text => :question_text).returns(question)
@@ -63,7 +65,8 @@ class QuizConstructorTest < ActiveSupport::TestCase
 
     should "return a QuestionConstructor with new Question" do
       quiz_constructor = Object.new.extend QuizConstructor
-      quiz_constructor.instance_variable_set('@current_quiz', quiz = Factory.build(:quiz))
+      quiz = Factory.build(:quiz)
+      quiz_constructor.instance_variable_set('@current_quiz', quiz)
       question = Factory.build(:question)
 
       Question.stubs(:new).with(:text => :question_text).returns(question)

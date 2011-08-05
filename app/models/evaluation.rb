@@ -23,6 +23,6 @@ class Evaluation < ActiveRecord::Base
   end
 
   def randomized_question_ids
-    question_ids.sort_by { rand }
+    question_ids.shuffle
   end
 end

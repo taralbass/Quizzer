@@ -6,6 +6,6 @@ module QuizzesHelper
   def estimate_rows_for_text_area str, cols
     return 3 if str.nil?
     cols = cols.to_f
-    str.split("\n").collect { |line| (line.length / cols).ceil }.collect { |v| v == 0 ? 1 : v }.inject(0) { |sum, i| sum + i }
+    str.split("\n").collect { |line| (line.length / cols).ceil }.collect { |v| v == 0 ? 1 : v }.sum
   end
 end

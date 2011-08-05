@@ -1,3 +1,8 @@
+h1. Quizzer
+
+
+h2. Overview
+
 Quizzer is an application that allows users to create and take quizzes. It was
 written primarily as a code sample and demo. You can see the code in action
 at rubypopquiz.com.
@@ -15,7 +20,10 @@ are "unpublished" and can be viewed, updated, and deleted by anybody.
 
 Quizzer is written uses Rail 3 and jQuery. It is optimized for Chrome but should
 work with most browsers (note that no pains have been taken to make it compatible
-with IE6). It features:
+with IE6).
+
+
+h2. Features
 
 * A small Ruby DSL for creating quizzes
 * A RESTful inline editing interface for manages quizzes, questions and answers
@@ -24,3 +32,9 @@ with IE6). It features:
 * Four pre-loaded Ruby quizzes
 * Comprehensive unit and functional tests written with mocha, factory_girl and
   shoulda
+
+
+h2. Acknowledgements
+
+Many thanks to Kyle Shipley for general feedback and code review.
+
