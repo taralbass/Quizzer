@@ -10,19 +10,8 @@ class EvaluationTest < ActiveSupport::TestCase
     should allow_mass_assignment_of(:parent_id)
     should allow_mass_assignment_of(:completed)
 
-    should "ensure quiz_id is readonly" do
-      evaluation = Factory :evaluation
-      assert_raise ActiveRecord::ActiveRecordError do
-        evaluation.update_attribute :quiz_id, Factory(:quiz).id
-      end
-    end
-
-    should "ensure parent_id is readonly" do
-      evaluation = Factory :evaluation
-      assert_raise ActiveRecord::ActiveRecordError do
-        evaluation.update_attribute :parent_id, Factory(:evaluation).id
-      end
-    end
+    should have_readonly_attribute(:quiz_id)
+    should have_readonly_attribute(:parent_id)
 
     should validate_presence_of(:quiz_id)
     should allow_value(true).for(:completed)

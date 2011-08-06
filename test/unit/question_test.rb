@@ -10,12 +10,7 @@ class QuestionTest < ActiveSupport::TestCase
     should allow_mass_assignment_of(:text)
     should allow_mass_assignment_of(:answers_attributes)
     
-    should "ensure quiz_id is readonly" do
-      question = Factory :question
-      assert_raise ActiveRecord::ActiveRecordError do
-        question.update_attribute :quiz_id, Factory(:quiz).id
-      end
-    end
+    should have_readonly_attribute(:quiz_id)
 
     should validate_presence_of(:quiz)
 

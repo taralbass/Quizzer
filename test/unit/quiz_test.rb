@@ -24,12 +24,7 @@ class QuizTest < ActiveSupport::TestCase
       should validate_uniqueness_of(:name)
     end
 
-    should "ensure published is readonly" do
-      evaluation = Factory :quiz
-      assert_raise ActiveRecord::ActiveRecordError do
-        evaluation.update_attribute :published, true
-      end
-    end
+    should have_readonly_attribute(:published)
 
     should "destroy its questions when it is destroyed" do
       quiz = Factory :quiz

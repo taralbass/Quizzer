@@ -7,12 +7,7 @@ class AnswerTest < ActiveSupport::TestCase
     should allow_mass_assignment_of(:question_id)
     should allow_mass_assignment_of(:text)
 
-    should "ensure question_id is readonly" do
-      answer = Factory :answer
-      assert_raise ActiveRecord::ActiveRecordError do
-        answer.update_attribute :question_id, Factory(:question).id
-      end
-    end
+    should have_readonly_attribute(:question_id)
 
     should validate_presence_of(:question)
     should validate_presence_of(:text)
