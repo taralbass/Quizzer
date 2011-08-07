@@ -3,7 +3,7 @@ require 'test_helper'
 class QuestionTest < ActiveSupport::TestCase
   context "a Question instance" do
     should belong_to(:quiz)
-    should have_many(:answers)
+    should have_many(:answers).dependent(:destroy)
     should have_many(:results)
 
     should allow_mass_assignment_of(:quiz_id)
@@ -17,19 +17,7 @@ class QuestionTest < ActiveSupport::TestCase
     should validate_presence_of(:text)
     should ensure_length_of(:text).is_at_most(600)
 
-    context "" do
-      setup do
-        Factory(:question)
-      end
-      should validate_uniqueness_of(:text).scoped_to(:quiz_id)
-    end
-
-    should "destroy its answers when it is destroyed" do
-      question = Factory :question
-      question.answers << answer = Factory(:answer)
-      answer.expects(:destroy)
-      question.destroy
-    end
+    should validate_uniqueness_of(:text).scoped_to(:quiz_id)
 
     should "have an inverted answers association" do
       question = Factory :question

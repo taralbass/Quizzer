@@ -12,12 +12,7 @@ class ResultTest < ActiveSupport::TestCase
     should validate_presence_of(:evaluation)
     should validate_presence_of(:question_id)
 
-    context "" do
-      setup do
-        Factory :result
-      end
-      should validate_uniqueness_of(:question_id).scoped_to(:evaluation_id)
-    end
+    should validate_uniqueness_of(:question_id).scoped_to(:evaluation_id)
 
     should validate_presence_of(:result)
     should allow_value('correct').for(:result)

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class QuizTest < ActiveSupport::TestCase
   context "a Quiz instance" do
-    should have_many(:questions)
+    should have_many(:questions).dependent(:destroy)
     should have_many(:evaluations)
 
     should allow_mass_assignment_of(:name)
@@ -17,21 +17,9 @@ class QuizTest < ActiveSupport::TestCase
     should allow_value(true).for(:published)
     should allow_value(false).for(:published)
 
-    context "" do
-      setup do
-        Factory :quiz
-      end
-      should validate_uniqueness_of(:name)
-    end
+    should validate_uniqueness_of(:name)
 
     should have_readonly_attribute(:published)
-
-    should "destroy its questions when it is destroyed" do
-      quiz = Factory :quiz
-      quiz.questions << question = Factory(:question)
-      question.expects(:destroy)
-      quiz.destroy
-    end
 
     should "have an inverted questions association" do
       quiz = Factory :quiz

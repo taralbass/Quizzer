@@ -14,12 +14,6 @@ class AnswerTest < ActiveSupport::TestCase
 
     should ensure_length_of(:text).is_at_most(50)
 
-    context "" do
-      setup do
-        Factory :answer
-      end
-
-      should validate_uniqueness_of(:text).scoped_to(:question_id)
-    end
+    should validate_uniqueness_of(:text).scoped_to(:question_id)
   end
 end

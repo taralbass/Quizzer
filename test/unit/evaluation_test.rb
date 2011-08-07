@@ -4,7 +4,7 @@ class EvaluationTest < ActiveSupport::TestCase
   context "an Evaluation instance" do
     should belong_to(:quiz)
     should belong_to(:parent)
-    should have_many(:results)
+    should have_many(:results).dependent(:destroy)
     
     should allow_mass_assignment_of(:quiz_id)
     should allow_mass_assignment_of(:parent_id)
