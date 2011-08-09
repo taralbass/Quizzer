@@ -7,6 +7,9 @@ gem 'andand'
 gem 'haml'
 gem 'sass'
 gem 'jquery-rails', '>= 1.0.3'
+gem 'therubyracer'
+gem 'json'
+gem 'barista'
 
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
