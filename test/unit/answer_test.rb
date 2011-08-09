@@ -6,14 +6,12 @@ class AnswerTest < ActiveSupport::TestCase
 
     should allow_mass_assignment_of(:question_id)
     should allow_mass_assignment_of(:text)
-
     should have_readonly_attribute(:question_id)
 
     should validate_presence_of(:question)
+
     should validate_presence_of(:text)
-
     should ensure_length_of(:text).is_at_most(50)
-
     should validate_uniqueness_of(:text).scoped_to(:question_id)
   end
 end

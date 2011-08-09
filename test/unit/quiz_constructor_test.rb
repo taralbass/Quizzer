@@ -10,71 +10,66 @@ require 'test_helper'
 require 'quiz_constructor'
 
 class QuizConstructorTest < ActiveSupport::TestCase
+  include QuizConstructor
+
   context "the quiz method" do
     should "create and save! a quiz with the provided name" do
-      quiz_constructor = Object.new.extend QuizConstructor
-      quiz = Factory.build(:quiz)
+      quiz_name = Factory.attributes_for(:quiz)[:name]
 
-      Quiz.expects(:new).with(:name => :quiz_name).returns(quiz)
-      quiz.expects(:save!)
-
-      quiz_constructor.quiz(:quiz_name) { }
+      assert_difference 'Quiz.count' do
+        quiz(quiz_name) { }
+      end
     end
 
     should "set published to true" do
-      quiz_constructor = Object.new.extend QuizConstructor
-      quiz_constructor.quiz(:quiz_name) do
-        assert quiz_constructor.instance_variable_get('@current_quiz').published
+      quiz_name = Factory.attributes_for(:quiz)[:name]
+
+      quiz(quiz_name) do
+        assert_true @current_quiz.published
       end
     end
 
     should "yield with @current_quiz instance variable correctly set" do
-      quiz_constructor = Object.new.extend QuizConstructor
-      quiz = Factory.build(:quiz)
+      quiz_name = Factory.attributes_for(:quiz)[:name]
 
-      Quiz.stubs(:new).with(:name => :quiz_name).returns(quiz)
-
-      quiz_constructor.quiz(:quiz_name) do
-        assert_equal quiz, quiz_constructor.instance_variable_get('@current_quiz')
+      quiz(quiz_name) do
+        assert_equal quiz_name, @current_quiz.name
       end
     end
   end
 
   context "the description method" do
     should "set the description for @current_quiz" do
-      quiz_constructor = Object.new.extend QuizConstructor
-      quiz = Factory.build(:quiz)
-      quiz_constructor.instance_variable_set('@current_quiz', quiz)
-      quiz.expects(:description=).with(:quiz_description)
-      quiz_constructor.description(:quiz_description)
+      quiz_name, quiz_description = Factory.attributes_for(:quiz).values_at(:name, :description)
+
+      quiz(quiz_name) do
+        description(quiz_description)
+        assert_equal quiz_description, @current_quiz.description
+      end
     end
   end
 
   context "the asks method" do
     should "create a Question for current quiz with provided text" do
-      quiz_constructor = Object.new.extend QuizConstructor
-      quiz = Factory.build(:quiz)
-      quiz_constructor.instance_variable_set('@current_quiz', quiz)
-      question = Factory.build(:question)
+      quiz_name = Factory.attributes_for(:quiz)[:name]
+      question_text = Factory.attributes_for(:question)[:text]
 
-      Question.expects(:new).with(:text => :question_text).returns(question)
-      quiz.questions.expects(:<<).with(question)
+      assert_difference 'Question.count' do
+        quiz(quiz_name) do
+          asks(question_text)
+          assert_equal question_text, @current_quiz.questions.last.text
+        end
+      end
 
-      quiz_constructor.asks(:question_text)
     end
 
     should "return a QuestionConstructor with new Question" do
-      quiz_constructor = Object.new.extend QuizConstructor
-      quiz = Factory.build(:quiz)
-      quiz_constructor.instance_variable_set('@current_quiz', quiz)
-      question = Factory.build(:question)
+      quiz_name = Factory.attributes_for(:quiz)[:name]
+      question_text = Factory.attributes_for(:question)[:text]
 
-      Question.stubs(:new).with(:text => :question_text).returns(question)
-
-      question_handler = quiz_constructor.asks(:question_text)
-
-      assert_equal question, question_handler.instance_variable_get('@question')
-      assert_equal QuizConstructor::QuestionConstructor, question_handler.class
+      quiz(quiz_name) do
+        assert_true asks(question_text).instance_of?(QuizConstructor::QuestionConstructor)
+      end
     end
   end
 end

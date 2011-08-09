@@ -29,7 +29,7 @@ class AnswersControllerTest < ActionController::TestCase
       published_quiz = Factory :published_quiz
       question = Factory :question, :quiz_id => published_quiz.id
       answer = Factory :answer, :question_id => question.id
-      @controller.stubs(:params).returns({ :id => answer.id })
+      stub(@controller).params { { :id => answer.id } }
       assert_raise ArgumentError do
         @controller.send(:require_unpublished)
       end
@@ -39,7 +39,7 @@ class AnswersControllerTest < ActionController::TestCase
       unpublished_quiz = Factory :quiz
       question = Factory :question, :quiz_id => unpublished_quiz.id
       answer = Factory :answer, :question_id => question.id
-      @controller.stubs(:params).returns({ :id => answer.id })
+      stub(@controller).params { { :id => answer.id } }
       assert_nothing_raised do
         @controller.send(:require_unpublished)
       end

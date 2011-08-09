@@ -27,7 +27,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
   should "be inlinified for all actions" do
     [ :show, :new, :create, :edit, :update, :destroy ].each do |action|
-      assert @controller.respond_to?(action)
+      assert_true @controller.respond_to?(action)
     end
   end
 
@@ -35,7 +35,7 @@ class QuestionsControllerTest < ActionController::TestCase
     should "raise an Argument exception if question for published quiz is identified" do
       published_quiz = Factory :published_quiz
       question = Factory :question, :quiz_id => published_quiz.id
-      @controller.stubs(:params).returns({ :id => question.id })
+      stub(@controller).params { { :id => question.id } }
       assert_raise ArgumentError do
         @controller.send(:require_unpublished)
       end
@@ -44,7 +44,7 @@ class QuestionsControllerTest < ActionController::TestCase
     should "not raise an Argument exception if question for unpublished quiz is identified" do
       unpublished_quiz = Factory :quiz
       question = Factory :question, :quiz_id => unpublished_quiz.id
-      @controller.stubs(:params).returns({ :id => question.id })
+      stub(@controller).params { { :id => question.id } }
       assert_nothing_raised do
         @controller.send(:require_unpublished)
       end

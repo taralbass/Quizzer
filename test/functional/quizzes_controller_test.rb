@@ -50,7 +50,7 @@ class QuizzesControllerTest < ActionController::TestCase
   context "on show" do
     context "for existing quiz" do
       setup do
-        @quiz = Factory :quiz
+        @quiz = Factory.create_with_stubbing :quiz
         get :show, :id => @quiz.id
       end
 
@@ -69,10 +69,7 @@ class QuizzesControllerTest < ActionController::TestCase
       end
 
       before_should "delegate to inlinified_show" do
-        # with inlinified_show stubbed for expectation, it won't render,
-        # causing the default render to happen -- stub it out
-        @controller.stubs(:render)
-        @controller.expects(:inlinified_show)
+        proxy.mock(@controller).inlinified_show
       end
     end
   end
@@ -91,29 +88,22 @@ class QuizzesControllerTest < ActionController::TestCase
   context "on create" do
     context "with valid parameters" do
       setup do
-        @quiz = Factory.build :quiz
-        Quiz.stubs(:new).with(@quiz.attributes).returns(@quiz)
+        @quiz = Factory.build_with_stubbing :quiz
+        post :create, :quiz => @quiz.attributes
       end
 
-      context "" do
-        setup do
-          post :create, :quiz => @quiz.attributes
-        end
+      should assign_to(:quiz).with(@quiz)
+      should_not set_the_flash
+      should redirect_to("quizzes_url") { quiz_url(@quiz) }
 
-        should assign_to(:quiz).with(@quiz)
-        should_not set_the_flash
-        should redirect_to("quizzes_url") { quiz_url(@quiz) }
-
-        before_should "save the new quiz" do
-          @quiz.expects(:save).returns(true)
-        end
+      should "save the new quiz" do
+        assert_true @quiz.persisted?
       end
     end
 
     context "with invalid parameters" do
       setup do
-        @quiz = Factory.build :quiz, :name => ""
-        Quiz.stubs(:new).with(@quiz.attributes).returns(@quiz)
+        @quiz = Factory.build_with_stubbing :quiz, :name => ""
         post :create, :quiz => @quiz.attributes
       end
 
@@ -123,39 +113,37 @@ class QuizzesControllerTest < ActionController::TestCase
       should render_template(:new)
       should_not set_the_flash
       should respond_with_content_type(:html)
+
+      should "not save the new quiz" do
+        assert_false @quiz.persisted?
+      end
     end
   end
 
   should "be inlinified for :edit and :update actions" do
     [ :edit, :update ].each do |action|
-      assert @controller.respond_to?(action)
+      assert_true @controller.respond_to?(action)
     end
   end
 
   context "on destroy" do
     setup do
-      @quiz = Factory :quiz
+      @quiz = Factory.create_with_stubbing :quiz
+      delete :destroy, :id => @quiz.id
     end
 
-    context "" do
-      setup do
-        Quiz.stubs(:find).with(@quiz.id).returns(@quiz)
-        delete :destroy, :id => @quiz.id
-      end
+    should set_the_flash
+    should redirect_to("quizzes_url") { quizzes_url(:manage_quizzes => true)}
 
-      should set_the_flash
-      should redirect_to("quizzes_url") { quizzes_url(:manage_quizzes => true)}
-
-      before_should "destroy the quiz" do
-        @quiz.expects(:destroy)
-      end
+    should "destroy the quiz" do
+      assert_nil Quiz.find_by_id(@quiz.id)
     end
   end
 
   context "the require_unpublished method" do
     should "raise an Argument exception if published quiz is identified" do
       published_quiz = Factory :published_quiz
-      @controller.stubs(:params).returns({ :id => published_quiz.id })
+      stub(@controller).params { { :id => published_quiz.id } }
       assert_raise ArgumentError do
         @controller.send(:require_unpublished)
       end
@@ -163,7 +151,7 @@ class QuizzesControllerTest < ActionController::TestCase
 
     should "not raise an Argument exception if unpublished quiz is identified" do
       unpublished_quiz = Factory :quiz
-      @controller.stubs(:params).returns({ :id => unpublished_quiz.id })
+      stub(@controller).params { { :id => unpublished_quiz.id } }
       assert_nothing_raised do
         @controller.send(:require_unpublished)
       end

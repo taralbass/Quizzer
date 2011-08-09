@@ -8,6 +8,11 @@ class InlineControllerTest < ActionController::TestCase
   # with other tests that do the same thing.
 
   anonymous_ox_class = Struct.new(:id, :attribute) do
+    @cache = {}
+    def self.cache(object)
+      @cache[object.id] = object
+    end
+
     def self.name; "Ox"; end
     def self.accessible_attributes; [ :attribute ]; end
     def save; true; end
@@ -23,14 +28,13 @@ class InlineControllerTest < ActionController::TestCase
 
     # needed to mock functionality used in rendering forms for object
     def self.model_name; ActiveModel::Name.new(self); end
-    def self.find; end
+    def self.find(id); @cache[id]; end
     def to_key; [self.id]; end
 
     def initialize args={}
       args ||= {}
       super args[:id], args[:attribute]
-
-      self.class.stubs(:find).with(self.id).returns(self)
+      self.class.cache(self)
     end
   end
 
@@ -71,15 +75,16 @@ class InlineControllerTest < ActionController::TestCase
       should respond_with_content_type(:js)
 
       before_should "render template shared/display_inline with correct locals" do
-        @controller.expects(:render).with(:template => 'shared/display_inline', :locals => { :target => @ox, :attr => :attribute })
-        @controller.expects(:render).with()
+        mock.proxy(@controller).render(:template => 'shared/display_inline', :locals => { :target => @ox, :attr => :attribute })
       end
     end
 
     context "without an attr param" do
       context "" do
         setup do
-          ActionView::Partials::PartialRenderer.any_instance.stubs(:render)
+          any_instance_of(ActionView::Partials::PartialRenderer) do |i|
+            stub(i).render { "" }
+          end
           with_oxen_routing do
             xhr :get, :show, :id => 123, :new_form_id => 5
           end
@@ -91,8 +96,7 @@ class InlineControllerTest < ActionController::TestCase
         should respond_with_content_type(:js)
 
         before_should "render template shared/display_inline_object with correct locals" do 
-          @controller.expects(:render).with(:template => 'shared/display_inline_object', :locals => { :ox => @ox, :partial => "oxen/ox", :new_form_id => 5 })
-          @controller.expects(:render).with()
+          mock.proxy(@controller).render(:template => 'shared/display_inline_object', :locals => { :ox => @ox, :partial => "oxen/ox", :new_form_id => 5 })
         end
       end
     end
@@ -112,7 +116,9 @@ class InlineControllerTest < ActionController::TestCase
     context "" do
       setup do
         with_oxen_routing do
-          ActionView::Partials::PartialRenderer.any_instance.stubs(:render)
+          any_instance_of(ActionView::Partials::PartialRenderer) do |i|
+            stub(i).render { "" }
+          end
           xhr :get, :new, :starting_new_form_id => 5, :count => 3
         end
       end
@@ -123,17 +129,15 @@ class InlineControllerTest < ActionController::TestCase
       should respond_with_content_type(:js)
 
       before_should "render template shared/display_new_inline_object with correct locals" do
-        @controller.expects(:render).with(:template => "shared/display_new_inline_object",
-                                          :locals => { :ox => anonymous_ox_class.new, :partial => 'oxen/new', :starting_new_form_id => 5, :count => 3 })
-        @controller.expects(:render).with()
+        mock.proxy(@controller).render(:template => "shared/display_new_inline_object",
+          :locals => { :ox => anonymous_ox_class.new, :partial => 'oxen/new', :starting_new_form_id => 5, :count => 3 })
       end
 
       before_should "render template shared/display_new_inline_object with custom initialized target" do
         def @controller.initialize_for_new *args; :initialized_target; end
-        @controller.class.stubs(:initialize_for_new_method).returns(:initialize_for_new)
-        @controller.expects(:render).with(:template => "shared/display_new_inline_object",
-                                          :locals => { :ox => :initialized_target, :partial => 'oxen/new', :starting_new_form_id => 5, :count => 3 })
-        @controller.expects(:render).with()
+        stub(@controller.class).initialize_for_new_method { :initialize_for_new }
+        mock.proxy(@controller).render(:template => "shared/display_new_inline_object",
+          :locals => { :ox => :initialized_target, :partial => 'oxen/new', :starting_new_form_id => 5, :count => 3 })
       end
     end
 
@@ -162,25 +166,24 @@ class InlineControllerTest < ActionController::TestCase
       should respond_with_content_type(:js)
 
       before_should "render shared/handle_successful_inline_creation" do
-        @controller.expects(:render).with(:template => 'shared/handle_successful_inline_creation',
+        mock.proxy(@controller).render(:template => 'shared/handle_successful_inline_creation',
           :locals => { :target => anonymous_ox_class.new(:attribute => :value), :new_form_id => 1 })
-        @controller.expects(:render).with()
       end
 
       before_should "save new instance" do
         ox = anonymous_ox_class.new(:attribute => :value)
-        anonymous_ox_class.expects(:new).with('attribute' => :value).returns(ox)
-        ox.expects(:save).returns(true)
+        mock(anonymous_ox_class).new('attribute' => :value) { ox }
+        mock(ox).save { true }
       end
 
       before_should "trigger before filter :scrub_target_params!" do
-        @controller.expects(:scrub_target_params!)
+        mock.proxy(@controller).scrub_target_params!
       end
     end
 
     context "with a failed creation" do
       setup do
-        anonymous_ox_class.any_instance.stubs(:save).returns(false)
+        any_instance_of(anonymous_ox_class) { |i| stub(i).save { false } }
         with_oxen_routing do
           xhr :post, :create, { :ox => { :attribute => :value }, :new_form_id => 1 }
         end
@@ -192,9 +195,8 @@ class InlineControllerTest < ActionController::TestCase
       should respond_with_content_type(:js)
 
       before_should "render shared/handle_failed_inline_creation" do
-        @controller.expects(:render).with(:template => 'shared/handle_failed_inline_creation',
+        mock.proxy(@controller).render(:template => 'shared/handle_failed_inline_creation',
           :locals => { :target => anonymous_ox_class.new(:attribute => :value), :new_form_id => 1 })
-        @controller.expects(:render).with()
       end
     end
 
@@ -213,7 +215,9 @@ class InlineControllerTest < ActionController::TestCase
     context "" do
       setup do
         with_oxen_routing do
-          ActionView::Partials::PartialRenderer.any_instance.stubs(:render)
+          any_instance_of(ActionView::Partials::PartialRenderer) do |i|
+            stub(i).render { "" }
+          end
           xhr :get, :edit, :id => 123, :attr => :attribute
         end
       end
@@ -224,8 +228,8 @@ class InlineControllerTest < ActionController::TestCase
       should respond_with_content_type(:js)
 
       before_should "render template shared/edit_inline with correct locals" do
-        @controller.expects(:render).with(:template => 'shared/edit_inline', :locals => { :target => @ox, :attr => :attribute, :partial => 'oxen/attribute_input' })
-        @controller.expects(:render).with()
+        mock.proxy(@controller).render(:template => 'shared/edit_inline',
+          :locals => { :target => @ox, :attr => :attribute, :partial => 'oxen/attribute_input' })
       end
     end
 
@@ -244,7 +248,7 @@ class InlineControllerTest < ActionController::TestCase
     context "with a successful update" do
       context "" do
         setup do
-          @ox.stubs(:update_attributes).returns(true)
+          stub(@ox).update_attributes { true }
           with_oxen_routing do
             xhr :put, :update, :id => 123, :attr => :attribute, :ox => { :attribute => :new_value }
           end
@@ -256,17 +260,17 @@ class InlineControllerTest < ActionController::TestCase
         should respond_with_content_type(:js)
 
         before_should "render template shared/handle_successful_inline_update with correct locals" do
-          @controller.expects(:render).with(:template => 'shared/handle_successful_inline_update', :locals => { :target => @ox, :attr => :attribute })
-          @controller.expects(:render).with()
+          mock.proxy(@controller).render(:template => 'shared/handle_successful_inline_update',
+            :locals => { :target => @ox, :attr => :attribute })
         end
 
         before_should "trigger before filter :scrub_target_params!" do
-          @controller.expects(:scrub_target_params!)
+          mock.proxy(@controller).scrub_target_params!
         end
       end
 
       before_should "update indicated attribute" do
-        @ox.expects(:update_attributes).returns(true)
+        mock(@ox).update_attributes(:attribute => :new_value) { true }
         with_oxen_routing do
           xhr :put, :update, :id => 123, :attr => :attribute, :ox => { :attribute => :new_value }
         end
@@ -275,7 +279,7 @@ class InlineControllerTest < ActionController::TestCase
 
     context "that has an unsuccessful update" do
       setup do
-        @ox.stubs(:update_attributes).returns(false)
+        stub(@ox).update_attributes { false }
         with_oxen_routing do
           xhr :put, :update, :id => 123, :attr => :attribute, :ox => { :attribute => :new_value }
         end
@@ -287,8 +291,8 @@ class InlineControllerTest < ActionController::TestCase
       should respond_with_content_type(:js)
 
       before_should "render template shared/handle_failed_inline_update with correct locals" do
-        @controller.expects(:render).with(:template => 'shared/handle_failed_inline_update', :locals => { :target => @ox, :attr => :attribute })
-        @controller.expects(:render).with()
+        mock.proxy(@controller).render(:template => 'shared/handle_failed_inline_update',
+          :locals => { :target => @ox, :attr => :attribute })
       end
     end
 
@@ -317,12 +321,12 @@ class InlineControllerTest < ActionController::TestCase
       should respond_with_content_type(:js)
 
       before_should "render template shared/handle_successful_inline_deletion" do
-        @controller.expects(:render).with(:template => 'shared/handle_successful_inline_deletion', :locals => { :target => @ox })
-        @controller.expects(:render).with()
+        mock.proxy(@controller).render(:template => 'shared/handle_successful_inline_deletion',
+          :locals => { :target => @ox })
       end
 
       before_should "destroy the target" do
-        @ox.expects(:destroy).returns(@ox)
+        mock(@ox).destroy { @ox }
       end
     end
 

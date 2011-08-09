@@ -23,7 +23,7 @@ module Switchboard
     context "a class that includes InlineControl" do
       setup do
         @anonymous_oxen_controller_class.send :include, Switchboard::InlineControl
-        @anonymous_oxen_controller_class.stubs(:default_target_class).returns(@anonymous_ox_class)
+        stub(@anonymous_oxen_controller_class).default_target_class { @anonymous_ox_class }
       end
 
       context "invoking the inlinify! method" do
@@ -114,7 +114,7 @@ module Switchboard
     context "the InlineControl default_target_class method" do
       should "correctly determine default target class" do
         @anonymous_oxen_controller_class.send :include, Switchboard::InlineControl
-        ActiveSupport::Inflector.stubs(:constantize).with("Ox").returns(@anonymous_ox_class)
+        stub(ActiveSupport::Inflector).constantize("Ox") { @anonymous_ox_class }
         assert_equal @anonymous_ox_class, @anonymous_oxen_controller_class.send(:default_target_class)
       end
     end
@@ -133,16 +133,16 @@ module Switchboard
 
       context "invoking the target_by_param_id instance method" do
         setup do
-          @controller_instance.stubs(:params).returns({ :id => :some_id })
+          stub(@controller_instance).params { { :id => :some_id } }
         end
 
         should "return the record identified by :id in params" do
-          @anonymous_ox_class.stubs(:find).with(:some_id).returns(:an_ox)
+          stub(@anonymous_ox_class).find(:some_id) { :an_ox }
           assert_equal :an_ox, @controller_instance.send(:target_by_param_id)
         end
 
         should "cache its result" do
-          @anonymous_ox_class.expects(:find).with(:some_id).returns(:an_ox).once
+          mock(@anonymous_ox_class).find(:some_id).times(1) { :an_ox }
           assert_equal @controller_instance.send(:target_by_param_id), @controller_instance.send(:target_by_param_id)
         end
       end
@@ -150,30 +150,30 @@ module Switchboard
       context "invoking the attr instance method" do
         context "with an :attr parameter" do
           setup do
-            @controller_instance.stubs(:params).returns({ :attr => :some_attribute })
+            stub(@controller_instance).params { { :attr => :some_attribute } }
           end
 
           should "return the attribute identified by :attr in params" do
-            @anonymous_ox_class.stubs(:accessible_attributes).returns([ :some_attribute ])
+            stub(@anonymous_ox_class).accessible_attributes { [ :some_attribute ] }
             assert_equal :some_attribute, @controller_instance.send(:attr)
           end
 
           should "throw an exception if the attribute is not accessible" do
-            @anonymous_ox_class.stubs(:accessible_attributes).returns([])
+            stub(@anonymous_ox_class).accessible_attributes { [] }
             assert_raise ArgumentError do
               @controller_instance.send(:attr)
             end
           end
 
           should "cache its result" do
-            @anonymous_ox_class.stubs(:accessible_attributes).returns([ :some_attribute ]).once
+            stub(@anonymous_ox_class).accessible_attributes.times(1) { [ :some_attribute ] }
             assert_equal @controller_instance.send(:attr), @controller_instance.send(:attr)
           end
         end
 
         context "without an :attr parameter" do
           setup do
-            @controller_instance.stubs(:params).returns({})
+            stub(@controller_instance).params { {} }
           end
 
           should "return nil" do
@@ -185,18 +185,18 @@ module Switchboard
       context "invoking the attr! instance method" do
         context "with an :attr parameter" do
           setup do
-            @controller_instance.stubs(:params).returns({ :attr => :some_attribute })
+            stub(@controller_instance).params { { :attr => :some_attribute } }
           end
 
           should "return the attribute identified by :attr in params" do
-            @anonymous_ox_class.stubs(:accessible_attributes).returns([ :some_attribute ])
+            stub(@anonymous_ox_class).accessible_attributes { [ :some_attribute ] }
             assert_equal :some_attribute, @controller_instance.send(:attr!)
           end
         end
 
         context "without an :attr parameter" do
           setup do
-            @controller_instance.stubs(:params).returns({})
+            stub(@controller_instance).params { {} }
           end
 
           should "raise an ArgumentException" do
@@ -223,7 +223,7 @@ module Switchboard
 
       context "invoking the scrub_param_values" do
         setup do
-          @controller_instance.stubs(:sanitize).returns("foo")
+          stub(@controller_instance).sanitize { "foo" }
         end
 
         should "sanitize hash values that are strings" do
@@ -250,7 +250,7 @@ module Switchboard
       context "invoking the scrub_target_params!" do
         should "scrub the params hash for target" do
           @controller_instance.params = { :ox => { :name => "foo1" } }
-          @controller_instance.expects(:scrub_param_values).with({ :name => "foo1" }).returns(:something)
+          mock(@controller_instance).scrub_param_values({ :name => "foo1" }) { :something }
           @controller_instance.send(:scrub_target_params!)
           assert_equal({ :ox => :something }, @controller_instance.params)
         end

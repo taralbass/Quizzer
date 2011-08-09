@@ -4,34 +4,30 @@ module QuizConstructor
   class QuestionConstructorTest < ActiveSupport::TestCase
     context "an QuestionConstructor instance" do
       should "assign argument to instance variable @question" do
-        assert_equal :question_text, QuestionConstructor.new(:question_text).instance_variable_get('@question')
+        assert_equal :question, QuestionConstructor.new(:question).instance_variable_get('@question')
       end
     end
 
     context "invoking with_answer" do
-      should "creates and adds one Answer with provided text" do
-        question_constructor = QuestionConstructor.new(question = Factory.build(:question))
-        answer = Factory.build(:answer)
+      should "builds and adds one Answer with provided text" do
+        question = Factory.build(:question, :answers => [])
+        question_constructor = QuestionConstructor.new(question)
+        answer_text = Factory.attributes_for(:answer)[:text]
 
-        Answer.expects(:new).with(:text => :answer_text).returns(answer)
-        question.answers.expects(:<<).with(answer)
-
-        question_constructor.with_answer(:answer_text)
+        question_constructor.with_answer(answer_text)
+        assert_equal 1, question.answers.size
+        assert_equal answer_text, question.answers.first.text
       end
     end
 
     context "invoking with_answers" do
       should "creates and add multiple Answers with provided text" do
-        pairs = {}
-        3.times { |i| pairs[:"answer_text_#{i}"] = Factory.build(:answer) }
-        question_constructor = QuestionConstructor.new(question = Factory.build(:question))
-
-        pairs.each do |text, object|
-          Answer.expects(:new).with(:text => text).returns(object)
-          question.answers.expects(:<<).with(object)
-        end
-
-        question_constructor.with_answers(*pairs.keys)
+        question = Factory.build(:question, :answers => [])
+        question_constructor = QuestionConstructor.new(question)
+        answer_texts = 3.times.collect { Factory.attributes_for(:answer)[:text] }
+        question_constructor.with_answers(*answer_texts)
+        assert_equal 3, question.answers.size
+        assert_equal answer_texts, question.answers.collect(&:text)
       end
     end
   end

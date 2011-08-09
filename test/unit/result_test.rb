@@ -10,8 +10,8 @@ class ResultTest < ActiveSupport::TestCase
     should have_readonly_attribute(:result)
 
     should validate_presence_of(:evaluation)
-    should validate_presence_of(:question_id)
 
+    should validate_presence_of(:question_id)
     should validate_uniqueness_of(:question_id).scoped_to(:evaluation_id)
 
     should validate_presence_of(:result)
@@ -21,12 +21,10 @@ class ResultTest < ActiveSupport::TestCase
     should_not allow_value('foo').for(:result)
 
     should "not allow question to be from another quiz" do
-      quiz1 = Factory :quiz
-      question1 = Factory :question, :quiz_id => quiz1.id
-      quiz2 = Factory :quiz
-      evaluation = Factory :evaluation, :quiz_id => quiz2.id
+      question = Factory :question
+      evaluation = Factory :evaluation
 
-      result = Result.create :evaluation_id => evaluation.id, :question_id => question1.id, :result => 'correct'
+      result = Result.create :evaluation_id => evaluation.id, :question_id => question.id, :result => 'correct'
       assert result.errors[:question].size == 1
     end
   end
@@ -52,7 +50,6 @@ class ResultTest < ActiveSupport::TestCase
         assert_equal @ignored_results.sort_by(&:id), Result.ignored.sort_by(&:id)
       end
     end
-
   end
 
 end

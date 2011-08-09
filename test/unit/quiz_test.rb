@@ -8,23 +8,19 @@ class QuizTest < ActiveSupport::TestCase
     should allow_mass_assignment_of(:name)
     should allow_mass_assignment_of(:description)
     should_not allow_mass_assignment_of(:published)
+    should have_readonly_attribute(:published)
 
     should validate_presence_of(:name)
     should ensure_length_of(:name).is_at_most(60)
+    should validate_uniqueness_of(:name)
 
     should ensure_length_of(:description).is_at_most(240)
 
     should allow_value(true).for(:published)
     should allow_value(false).for(:published)
 
-    should validate_uniqueness_of(:name)
-
-    should have_readonly_attribute(:published)
-
     should "have an inverted questions association" do
-      quiz = Factory :quiz
-      Factory :question, :quiz_id => quiz.id
-
+      quiz = Factory(:question).quiz
       quiz = Quiz.find(quiz.id, :include => :questions)
       same_quiz = quiz.questions.first.quiz
       quiz.name = "a different quiz name"
@@ -32,8 +28,8 @@ class QuizTest < ActiveSupport::TestCase
     end
 
     should "make a deep clone" do
-      quiz = Factory :quiz
-      question = Factory :question, :quiz_id => quiz.id
+      question = Factory :question
+      quiz = question.quiz
       new_quiz = quiz.clone
       new_quiz.name += " (copy)"
       new_quiz.save!

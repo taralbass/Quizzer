@@ -9,11 +9,11 @@ class EvaluationTest < ActiveSupport::TestCase
     should allow_mass_assignment_of(:quiz_id)
     should allow_mass_assignment_of(:parent_id)
     should allow_mass_assignment_of(:completed)
-
     should have_readonly_attribute(:quiz_id)
     should have_readonly_attribute(:parent_id)
 
     should validate_presence_of(:quiz_id)
+
     should allow_value(true).for(:completed)
     should allow_value(false).for(:completed)
 
@@ -32,7 +32,7 @@ class EvaluationTest < ActiveSupport::TestCase
     context "invoking add_result" do
       should "create a new result" do
         evaluation = Factory :evaluation
-        question = Factory :question
+        question = Factory :question, :quiz_id => evaluation.quiz_id
         evaluation.add_result question.id, 'correct'
         assert_equal question.id, evaluation.results.first.question_id
         assert_equal 'correct', evaluation.results.first.result
@@ -42,7 +42,7 @@ class EvaluationTest < ActiveSupport::TestCase
     context "invoking question_ids" do
       context "without a parent" do
         should "return question ids from quiz" do
-          evaluation = Factory :evaluation
+          evaluation = Factory :evaluation, :parent_id => nil
           questions = 3.times.collect { Factory :question, :quiz => evaluation.quiz }
           assert_equal questions.collect(&:id).sort, evaluation.question_ids
         end
@@ -73,8 +73,8 @@ class EvaluationTest < ActiveSupport::TestCase
       should "return randomized array of question ids" do
         evaluation = Evaluation.new
         results = [1, 2, 3, 4]
-        results.expects(:shuffle).returns([2, 4, 3, 1])
-        evaluation.stubs(:question_ids).returns(results)
+        mock(results).shuffle { [2, 4, 3, 1] }
+        mock(evaluation).question_ids { results }
         assert_equal [2, 4, 3, 1], evaluation.randomized_question_ids
       end
     end

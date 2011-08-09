@@ -19,7 +19,8 @@ end
 
 group :test do
   #:require => false fixes some sort of load order issue with mocha (expectations weren't triggering)
-  gem 'mocha', :require => false
+#  gem 'mocha', :require => false
   gem 'thoughtbot-shoulda', :require => 'shoulda'
   gem 'factory_girl_rails'
+  gem 'rr'
 end

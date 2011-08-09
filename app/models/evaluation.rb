@@ -10,12 +10,12 @@ class Evaluation < ActiveRecord::Base
   validates :quiz_id, :presence => true
   validates :completed, :inclusion => { :in => [ true, false ] }
 
-  def question id
+  def question(id)
     quiz.questions.find(id)
   end
 
-  def add_result question_id, result
-    results.create :question_id => question_id, :result => result
+  def add_result(question_id, result)
+    results.create! :question_id => question_id, :result => result
   end
 
   def question_ids

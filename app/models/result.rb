@@ -8,7 +8,7 @@ class Result < ActiveRecord::Base
   validates :evaluation, :presence => true
   validates :question_id, :presence => true, :uniqueness => { :scope => :evaluation_id }
   validates :result, :presence => true, :inclusion => { :in => [ 'correct', 'incorrect', 'ignored' ] }
-  validate :question_part_of_quiz
+  validate :question_belongs_to_evaluation_quiz
 
   scope :correct, where(:result => 'correct')
   scope :incorrect, where(:result => 'incorrect')
@@ -16,7 +16,7 @@ class Result < ActiveRecord::Base
 
   private
 
-  def question_part_of_quiz
+  def question_belongs_to_evaluation_quiz
     if question && evaluation && question.quiz_id != evaluation.quiz_id
       errors.add(:question, "must be from evaluation quiz")
     end

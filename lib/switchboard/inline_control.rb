@@ -1,7 +1,7 @@
 module Switchboard
   module InlineControl
 
-    def self.included client_module
+    def self.included(client_module)
       client_module.extend ClassMethods
     end
 
@@ -17,7 +17,7 @@ module Switchboard
       alias :inlinified_show_partial :show_partial=
       alias :inlinified_new_partial :new_partial=
 
-      def inlinify! *args
+      def inlinify!(*args)
         set_defaults
         args = [ :show, :new, :create, :edit, :update, :destroy ] unless args.size > 0
         args.each { |a| send('inlinify_' + a.to_s + '!') }
@@ -136,12 +136,12 @@ module Switchboard
       request.xhr? or raise ArgumentError, "xhr request required"
     end
 
-    def sanitize str
+    def sanitize(str)
       [ /\r\n/, /\n\r/, /\r/ ].each { |regex| str.gsub!(regex, "\n") }
       str
     end
 
-    def scrub_param_values params_root
+    def scrub_param_values(params_root)
       params_root ||= {}
       params_root.each do |key, value|
         params_root[key] = case value

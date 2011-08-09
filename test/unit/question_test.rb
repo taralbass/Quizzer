@@ -9,20 +9,16 @@ class QuestionTest < ActiveSupport::TestCase
     should allow_mass_assignment_of(:quiz_id)
     should allow_mass_assignment_of(:text)
     should allow_mass_assignment_of(:answers_attributes)
-    
     should have_readonly_attribute(:quiz_id)
 
     should validate_presence_of(:quiz)
 
     should validate_presence_of(:text)
     should ensure_length_of(:text).is_at_most(600)
-
     should validate_uniqueness_of(:text).scoped_to(:quiz_id)
 
     should "have an inverted answers association" do
-      question = Factory :question
-      Factory :answer, :question_id => question.id
-
+      question = Factory(:answer).question
       question = Question.find(question.id, :include => :answers)
       same_question = question.answers.first.question
       question.text = "different text"
@@ -40,8 +36,8 @@ class QuestionTest < ActiveSupport::TestCase
     end
 
     should "make a deep clone" do
-      question = Factory :question
-      answer = Factory :answer, :question_id => question.id
+      answer = Factory :answer
+      question = answer.question
       new_question = question.clone
       new_question.text += ' (copy)'
       new_question.save!
@@ -51,12 +47,12 @@ class QuestionTest < ActiveSupport::TestCase
 
     context "invoking correct_answers?" do
       setup do
-        @question = Factory :question
+        @question = Factory.build :question
       end
 
       context "with a single answer" do
         setup do
-          @question.answers << Factory(:answer, :text => "abc")
+          @question.answers << Factory.build(:answer, :text => "abc")
         end
 
         should "return true if correct answer is provided" do
@@ -70,9 +66,9 @@ class QuestionTest < ActiveSupport::TestCase
 
       context "with multiple answers" do
         setup do
-          @question.answers << Factory(:answer, :text => "aaa")
-          @question.answers << Factory(:answer, :text => "bbb")
-          @question.answers << Factory(:answer, :text => "ccc")
+          [ "aaa", "bbb", "ccc" ].each do |text|
+            @question.answers << Factory.build(:answer, :text => text)
+          end
         end
 
         should "return true if correct answers are provided" do

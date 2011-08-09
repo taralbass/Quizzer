@@ -14,7 +14,7 @@ class Quiz < ActiveRecord::Base
   scope :published, where(:published => true)
   scope :unpublished, where(:published => false)
 
-  def initialize_copy original
+  def initialize_copy(original)
     super
     questions << original.questions.collect(&:clone).each { |q| q.quiz_id = nil }
   end

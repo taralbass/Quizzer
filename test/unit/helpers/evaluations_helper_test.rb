@@ -10,7 +10,7 @@ class EvaluationsHelperTest < ActionView::TestCase
       end
 
       should "use answer_delimiter" do
-        self.expects(:answer_delimiter)
+        mock.proxy(self).answer_delimiter
         evaluation_answer_delimiter(1, 1)
       end
     end
@@ -21,7 +21,7 @@ class EvaluationsHelperTest < ActionView::TestCase
       end
 
       should "use user numeric delimiter" do
-        self.expects(:answer_delimiter).never
+        do_not_allow(self).answers_delimiter
         assert_match /3\./, evaluation_answer_delimiter(5, 3)
       end
     end
