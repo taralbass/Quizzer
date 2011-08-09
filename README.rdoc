@@ -1,7 +1,7 @@
-h1. Quizzer
+= Quizzer
 
 
-h2. Overview
+== Overview
 
 Quizzer is an application that allows users to create and take quizzes. It was
 written primarily as a code sample and demo. You can see the code in action
@@ -23,7 +23,7 @@ work with most browsers (note that no pains have been taken to make it compatibl
 with IE6).
 
 
-h2. Features
+== Features
 
 * A small Ruby DSL for creating quizzes
 * A RESTful inline editing interface for manages quizzes, questions and answers
@@ -34,7 +34,7 @@ h2. Features
   shoulda
 
 
-h2. Acknowledgements
+== Acknowledgements
 
 Many thanks to Kyle Shipley for general feedback and code review.
 
