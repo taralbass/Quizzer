@@ -1,4 +1,5 @@
-SITE_NAME = 'rubypopquiz.com'
+SITE_NAME = 'quiz.ruby :pop'
+SITE_DOMAIN = 'www.rubypopquiz.com'
 CONTACT_EMAIL = 'taralbass at gmail dot com'
 GITHUB_URL = 'https://github.com/taralbass/Quizzer'
 
