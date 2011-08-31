@@ -5,22 +5,22 @@
 
 Quizzer is an application that allows users to create and take quizzes. It was
 written primarily as a code sample and demo. You can see the code in action
-at rubypopquiz.com.
+at http://www.rubypopquiz.com.
 
 Quizzer does not feature any authentication, although this may be added in the
-future. The reasoning behind this decision is to minimize barriers to casual use,
-since the site is after all a demo site. However, the decision does force a
-somewhat awkward interface to quiz management. Without the protection of
-authentication, the concept of creating and updating quizzes makes little sense.
-In order to be able to demo that functionality, quizzes are identified under the
-hood as either "published" or "unpublished". The published quizzes are loaded
-directly into the database via seeding using a custom Ruby DSL. These quizzes
-cannot be changed or even seen in the quiz management section. All other quizzes
-are "unpublished" and can be viewed, updated, and deleted by anybody.
+future. The motivation for this decision is to minimize barriers to casual use,
+since the site is a demo site. However, the decision does force a somewhat awkward
+interface to quiz management. Without authentication, the concept of creating and
+updating quizzes makes little sense. In order to be able to demo that functionality,
+quizzes are identified under the hood as either "published" or "unpublished". The
+published quizzes are loaded directly into the database via seeding using a custom
+Ruby DSL. These quizzes cannot be changed or even seen in the quiz management
+section. All other quizzes are "unpublished" and can be viewed, updated, and deleted
+by anybody, but do not appear in the home page list of quizzes.
 
-Quizzer is written uses Rail 3 and jQuery. It is optimized for Chrome but should
-work with most browsers (note that no pains have been taken to make it compatible
-with IE6).
+Quizzer is written using Rails 3 and jQuery. It is optimized for Chrome but should
+work with most browsers, although no pains have been taken to make it compatible
+with IE6.
 
 
 == Features
@@ -32,6 +32,58 @@ with IE6).
 * Four pre-loaded Ruby quizzes
 * Comprehensive unit and functional tests written with mocha, factory_girl and
   shoulda
+
+
+== Overview of Inline Management
+
+Quizzer contains a framework for editing individual fields of an resource inline.
+This functionality is used in the Quiz Management Demo to edit quizzes, questions
+and answers.
+
+Objects that are managed inline are wrapped in a div with the class _inline_managed_.
+Each attribute that is editable inline is similarly wrapped in a div with the class
+_inline_managed_attribute_, with the value itself wrapped with a div with the class
+_inline_displayed_. If the _inline_displayed_ div is clicked, it is replaced via
+AJAX with a new div with the class _inline_editable_ which contains the form to edit
+that field. Canceling or successfully updating the field will result in the 
+_inline_editable_ div being replaced with an _inline_displayed_ div with the current
+value for the field, thus toggling back to its original structural state.
+
+Below is a tree representation of the div structure described above:
+
+  .inline_managed   # one per resource instance
+    .inline_managed_attribute   # one per inline editable attribute
+      .inline_displayed or .inline_editable   # toggled
+        ...   # attibute value or edit form for attribute value depending on toggle state
+
+Objects can also be created within the inline management framework. The for for a
+new instance of the resource, which can contain multiple fields, is wrapped in an
+_inline_managed_object_ div, which is in turn wrapped with a placeholder
+_inline_managed_ div. The form can be submitted via AJAX, in which case the
+_inline_managed_object_ div is replaced by the rendered object (still within its
+_inline_managed_ div). The rendered object's individual attributes can be wrapped in
+_inline_managed_attribute_ divs to make them inline editable, yielding the same
+structure that is described in the paragraph above.
+
+Below is a tree representation of the div structure for a new resource instance:
+
+  .inline_managed   # one per potential new resource instance
+    .inline_managed object   # replaced with rendered object per structure in above tree
+      ...   # new form for resource
+
+The inline management framework includes a module called Switchboard::InlineControl
+that can be included by the controller for an resource that will be managed inline.
+The controller specifies which REST actions to "inlinify" by called the _inlinify!_
+method.
+
+  class SomeResourcesController < ApplicationController
+    include Switchboard::InlineControl
+    inlinify! :show, :edit, :update
+    ...
+  end
+
+The inline management framework also includes a javascript file _inline_management.js_
+to handle the AJAX aspects of the framework, as well as partials to support the framework.
 
 
 == Acknowledgements
